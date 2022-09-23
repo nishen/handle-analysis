@@ -115,3 +115,6 @@ select *
 select *
   from handles h
  where h.alias is not null;
+
+
+delete from handles;

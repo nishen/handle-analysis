@@ -9,7 +9,7 @@ if __name__ == "__main__":
     log.info("starting...")
     matcher_pid_url = re.compile('(\w+)://(.*?):?(\d{0,4})/.*/(mq:\d+)/?(.*)')
     matcher_url = re.compile("(\w+)://([a-zA-Z0-9\-\.]+):?(\d{0,5})/?.*")
-    file = open("D:/Temp/handle-dump-05.txt", "r")
+    file = open("D:/Temp/handle-dump.txt", "r")
     #file = open("D:/Temp/sample-handle.txt", "r")
 
     # engine = create_engine("mariadb+pymysql://analytics:analytics@hermes/analytics?charset=utf8mb4")
