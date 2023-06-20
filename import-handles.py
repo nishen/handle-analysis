@@ -7,15 +7,13 @@ log.basicConfig(level=log.DEBUG, format="[%(asctime)s][%(levelname)s]: %(message
 
 if __name__ == "__main__":
     log.info("starting...")
-    matcher_pid_url = re.compile('(\w+)://(.*?):?(\d{0,4})/.*/(mq:\d+)/?(.*)')
-    matcher_url = re.compile("(\w+)://([a-zA-Z0-9\-\.]+):?(\d{0,5})/?.*")
-    file = open("D:/Temp/handle-dump.txt", "r")
-    #file = open("D:/Temp/sample-handle.txt", "r")
+    matcher_pid_url = re.compile('(\\w+)://(.*?):?(\\d{0,4})/.*/(mq:\\d+)/?(.*)')
+    matcher_url = re.compile("(\\w+)://([a-zA-Z0-9\\-\\.]+):?(\\d{0,5})/?.*")
+    file = open("D:/Temp/handles-dump-01.txt", "r")
 
-    # engine = create_engine("mariadb+pymysql://analytics:analytics@hermes/analytics?charset=utf8mb4")
-    engine = create_engine("sqlite:///C:\\Data\\sqlite\\handles.db")
-    meta_data = MetaData(bind=engine)
-    MetaData.reflect(meta_data)
+    engine = create_engine("sqlite:///C:\\Data\\sqlite\\handles-tmp.db")
+    meta_data = MetaData()
+    meta_data.reflect(bind=engine)
     handles_table = meta_data.tables['handles']
     conn = engine.connect()
 
@@ -77,12 +75,14 @@ if __name__ == "__main__":
             count += len(records)
             log.info("adding records: %s", count)
             result = conn.execute(insert(handles_table), records)
+            conn.commit()
             records.clear()
 
     if len(records) > 0:
         count += len(records)
         log.info("adding records: %s", count)
         result = conn.execute(insert(handles_table), records)
+        conn.commit()
         count += len(records)
         records.clear()
 
